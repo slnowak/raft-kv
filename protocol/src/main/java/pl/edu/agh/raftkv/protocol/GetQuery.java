@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.client.raftclient;
+package pl.edu.agh.raftkv.protocol;
 
 import io.atomix.copycat.Query;
 import lombok.RequiredArgsConstructor;
@@ -8,8 +8,7 @@ import lombok.RequiredArgsConstructor;
  */
 
 @RequiredArgsConstructor
-class GetQuery implements Query<Object> {
-
+public class GetQuery implements Query<Object> {
     public final String key;
 
     @Override

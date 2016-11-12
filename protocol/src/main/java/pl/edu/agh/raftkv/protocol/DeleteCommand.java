@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.client.raftserver;
+package pl.edu.agh.raftkv.protocol;
 
 import io.atomix.copycat.Command;
 import lombok.RequiredArgsConstructor;
@@ -8,7 +8,7 @@ import lombok.RequiredArgsConstructor;
  */
 
 @RequiredArgsConstructor
-class DeleteCommand implements Command<Void> {
+public class DeleteCommand implements Command<Void> {
     public final String key;
 
     @Override

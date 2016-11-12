@@ -3,6 +3,9 @@ package pl.edu.agh.raftkv.client.raftserver;
 import io.atomix.copycat.server.Commit;
 import io.atomix.copycat.server.StateMachine;
 import io.atomix.copycat.server.StateMachineExecutor;
+import pl.edu.agh.raftkv.protocol.DeleteCommand;
+import pl.edu.agh.raftkv.protocol.GetQuery;
+import pl.edu.agh.raftkv.protocol.PutCommand;
 
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;

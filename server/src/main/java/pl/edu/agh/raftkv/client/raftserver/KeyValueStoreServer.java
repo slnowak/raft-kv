@@ -4,6 +4,9 @@ import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.netty.NettyTransport;
 import io.atomix.copycat.server.CopycatServer;
 import io.atomix.copycat.server.storage.Storage;
+import pl.edu.agh.raftkv.protocol.DeleteCommand;
+import pl.edu.agh.raftkv.protocol.GetQuery;
+import pl.edu.agh.raftkv.protocol.PutCommand;
 
 import java.time.Duration;
 

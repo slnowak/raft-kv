@@ -7,6 +7,9 @@ import io.atomix.copycat.client.CopycatClient;
 import io.atomix.copycat.client.RecoveryStrategies;
 import io.atomix.copycat.client.ServerSelectionStrategies;
 import lombok.SneakyThrows;
+import pl.edu.agh.raftkv.protocol.DeleteCommand;
+import pl.edu.agh.raftkv.protocol.GetQuery;
+import pl.edu.agh.raftkv.protocol.PutCommand;
 
 import java.util.Optional;
 
