@@ -14,32 +14,34 @@ import java.time.Duration;
  * Created by novy on 12.11.16.
  */
 
-public class KeyValueStoreServer {
-    private final String host;
-    private final int port;
+public class RaftKVSNode {
+    private final NodeAddress address;
     private final String journalDirectory;
 
     private CopycatServer server;
 
-    public KeyValueStoreServer(String host, int port, String journalDirectory) {
-        this.host = host;
-        this.port = port;
+    public RaftKVSNode(NodeAddress address, String journalDirectory) {
+        this.address = address;
         this.journalDirectory = journalDirectory;
     }
 
-    public KeyValueStoreServer(String host, int port) {
-        this(host, port, "/tmp");
+    public RaftKVSNode(NodeAddress address) {
+        this(address, "/tmp");
     }
 
-    public void start() {
-        server = createServer();
+    public void bootstrap(RaftKVSCluster cluster) {
+        final CopycatServer node = initializedCopycatNode();
+        cluster.initBy(node);
+    }
+
+    private CopycatServer initializedCopycatNode() {
+        final CopycatServer server = createCopycatNode();
         registerCommands(server);
-
-        server.bootstrap().join();
+        return server;
     }
 
-    private CopycatServer createServer() {
-        return CopycatServer.builder(new Address(host, port))
+    private CopycatServer createCopycatNode() {
+        return CopycatServer.builder(new Address(address.toURIString()))
                 .withStateMachine(RaftKVStateMachine::new)
                 .withTransport(new NettyTransport())
                 .withStorage(Storage.builder()
@@ -60,4 +62,5 @@ public class KeyValueStoreServer {
     public void stop() {
         server.shutdown();
     }
+
 }
