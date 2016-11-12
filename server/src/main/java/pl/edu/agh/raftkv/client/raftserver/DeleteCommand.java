@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.kvstore;
+package pl.edu.agh.raftkv.client.raftserver;
 
 import io.atomix.copycat.Command;
 import lombok.RequiredArgsConstructor;

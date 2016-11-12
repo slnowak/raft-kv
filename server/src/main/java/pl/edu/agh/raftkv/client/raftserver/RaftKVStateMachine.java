@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.kvstore;
+package pl.edu.agh.raftkv.client.raftserver;
 
 import io.atomix.copycat.server.Commit;
 import io.atomix.copycat.server.StateMachine;
@@ -11,7 +11,6 @@ import java.util.concurrent.ConcurrentHashMap;
  * Created by novy on 12.11.16.
  */
 class RaftKVStateMachine extends StateMachine {
-
     private final Map<String, Object> dataStore = new ConcurrentHashMap<>();
 
     @Override

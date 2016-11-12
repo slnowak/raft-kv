@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.kvstore;
+package pl.edu.agh.raftkv.client.raftserver;
 
 import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.netty.NettyTransport;
@@ -29,27 +29,32 @@ public class KeyValueStoreServer {
     }
 
     public void start() {
-        server = CopycatServer.builder(new Address(host, port))
+        server = createServer();
+        registerCommands(server);
+
+        server.bootstrap().join();
+    }
+
+    private CopycatServer createServer() {
+        return CopycatServer.builder(new Address(host, port))
                 .withStateMachine(RaftKVStateMachine::new)
                 .withTransport(new NettyTransport())
                 .withStorage(Storage.builder()
-                        .withDirectory("/tmp")
+                        .withDirectory(journalDirectory)
                         .withMaxSegmentSize(1024 * 1024 * 32)
                         .withMinorCompactionInterval(Duration.ofMinutes(1))
                         .withMajorCompactionInterval(Duration.ofMinutes(15))
                         .build())
                 .build();
+    }
 
+    private void registerCommands(CopycatServer server) {
         server.serializer().register(PutCommand.class, 1);
         server.serializer().register(GetQuery.class, 2);
         server.serializer().register(DeleteCommand.class, 3);
-
-        server.bootstrap().join();
     }
 
     public void stop() {
         server.shutdown();
     }
-
-
 }

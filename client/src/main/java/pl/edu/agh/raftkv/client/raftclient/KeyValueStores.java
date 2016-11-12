@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.kvstore;
+package pl.edu.agh.raftkv.client.raftclient;
 
 /**
  * Created by novy on 12.11.16.

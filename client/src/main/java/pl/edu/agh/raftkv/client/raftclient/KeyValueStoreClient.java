@@ -1,4 +1,4 @@
-package pl.edu.agh.raftkv.kvstore;
+package pl.edu.agh.raftkv.client.raftclient;
 
 import java.util.Optional;
 

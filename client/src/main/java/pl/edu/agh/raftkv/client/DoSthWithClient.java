@@ -1,7 +1,7 @@
-package pl.edu.agh.raftkv;
+package pl.edu.agh.raftkv.client;
 
-import pl.edu.agh.raftkv.kvstore.KeyValueStoreClient;
-import pl.edu.agh.raftkv.kvstore.KeyValueStores;
+import pl.edu.agh.raftkv.client.raftclient.KeyValueStoreClient;
+import pl.edu.agh.raftkv.client.raftclient.KeyValueStores;
 
 import java.util.Optional;
 
