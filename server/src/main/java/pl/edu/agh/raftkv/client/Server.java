@@ -12,7 +12,7 @@ public class Server {
         final Context ctx = new Context();
 
         final RaftKVSCluster cluster = RaftKVSCluster.withInitialNodes(ctx.initialNodes());
-        final RaftKVSNode node = new RaftKVSNode(ctx.nodeAddress());
+        final RaftKVSNode node = new RaftKVSNode(ctx.clientBinding(), ctx.clusterBinding());
         node.bootstrap(cluster);
     }
 }

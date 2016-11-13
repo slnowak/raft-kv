@@ -11,7 +11,10 @@ import pl.edu.agh.raftkv.protocol.DeleteCommand;
 import pl.edu.agh.raftkv.protocol.GetQuery;
 import pl.edu.agh.raftkv.protocol.PutCommand;
 
+import java.util.Collection;
+import java.util.Collections;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 /**
  * Created by novy on 12.11.16.
@@ -20,8 +23,13 @@ class RaftKVStoreClient implements KeyValueStoreClient {
 
     private final CopycatClient client;
 
-    public RaftKVStoreClient(String serverHost, int serverPort) {
-        client = CopycatClient.builder(new Address(serverHost, serverPort))
+
+    public RaftKVStoreClient(String serverAddress) {
+        this(Collections.singletonList(serverAddress));
+    }
+
+    public RaftKVStoreClient(Collection<String> clusterAddresses) {
+        client = CopycatClient.builder(fromStringAddresses(clusterAddresses))
                 .withTransport(new NettyTransport())
                 .withConnectionStrategy(ConnectionStrategies.FIBONACCI_BACKOFF)
                 .withRecoveryStrategy(RecoveryStrategies.RECOVER)
@@ -33,6 +41,10 @@ class RaftKVStoreClient implements KeyValueStoreClient {
         client.serializer().register(DeleteCommand.class, 3);
 
         client.connect().join();
+    }
+
+    private Collection<Address> fromStringAddresses(Collection<String> addresses) {
+        return addresses.stream().map(Address::new).collect(Collectors.toList());
     }
 
     @Override

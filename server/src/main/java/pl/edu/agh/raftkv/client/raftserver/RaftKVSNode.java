@@ -15,18 +15,20 @@ import java.time.Duration;
  */
 
 public class RaftKVSNode {
-    private final NodeAddress address;
+    private final NodeAddress clientBinding;
+    private final NodeAddress clusterBinding;
     private final String journalDirectory;
 
     private CopycatServer server;
 
-    public RaftKVSNode(NodeAddress address, String journalDirectory) {
-        this.address = address;
+    public RaftKVSNode(NodeAddress clientBinding, NodeAddress clusterBinding, String journalDirectory) {
+        this.clientBinding = clientBinding;
+        this.clusterBinding = clusterBinding;
         this.journalDirectory = journalDirectory;
     }
 
-    public RaftKVSNode(NodeAddress address) {
-        this(address, "/tmp");
+    public RaftKVSNode(NodeAddress clientBinding, NodeAddress clusterBinding) {
+        this(clientBinding, clusterBinding, "/tmp");
     }
 
     public void bootstrap(RaftKVSCluster cluster) {
@@ -41,7 +43,7 @@ public class RaftKVSNode {
     }
 
     private CopycatServer createCopycatNode() {
-        return CopycatServer.builder(new Address(address.toURIString()))
+        return CopycatServer.builder(new Address(clientBinding.toURIString()), new Address(clusterBinding.toURIString()))
                 .withStateMachine(RaftKVStateMachine::new)
                 .withTransport(new NettyTransport())
                 .withStorage(Storage.builder()

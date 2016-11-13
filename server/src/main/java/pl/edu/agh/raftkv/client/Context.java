@@ -18,11 +18,18 @@ class Context {
         environment = new Environment();
     }
 
-    NodeAddress nodeAddress() {
+    NodeAddress clusterBinding() {
         return environment
-                .get("HOST_ADDRESS")
+                .get("CLUSTER_BINDING_ADDRESS")
                 .map(NodeAddress::new)
                 .orElse(new NodeAddress("localhost", 9090));
+    }
+
+    NodeAddress clientBinding() {
+        return environment
+                .get("CLIENT_BINDING_ADDRESS")
+                .map(NodeAddress::new)
+                .orElse(new NodeAddress("0.0.0.0", 9091));
     }
 
     Collection<NodeAddress> initialNodes() {
