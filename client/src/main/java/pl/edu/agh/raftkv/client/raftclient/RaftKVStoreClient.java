@@ -31,9 +31,9 @@ class RaftKVStoreClient implements KeyValueStoreClient {
     public RaftKVStoreClient(Collection<String> clusterAddresses) {
         client = CopycatClient.builder(fromStringAddresses(clusterAddresses))
                 .withTransport(new NettyTransport())
-                .withConnectionStrategy(ConnectionStrategies.FIBONACCI_BACKOFF)
+                .withConnectionStrategy(ConnectionStrategies.EXPONENTIAL_BACKOFF)
                 .withRecoveryStrategy(RecoveryStrategies.RECOVER)
-                .withServerSelectionStrategy(ServerSelectionStrategies.LEADER)
+                .withServerSelectionStrategy(ServerSelectionStrategies.ANY)
                 .build();
 
         client.serializer().register(PutCommand.class, 1);

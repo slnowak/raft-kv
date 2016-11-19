@@ -1,0 +1,46 @@
+version: '2'
+
+services:
+  node1:
+    image: test
+    ports:
+      -  "9091:9091"
+    environment:
+      - CLUSTER_BINDING_ADDRESS=node1:9090
+      - INITIAL_CLUSTER_NODES=node1:9090;node2:9090;node3:9090;node4:9090;node5:9090
+  node2:
+    image: test
+    ports:
+      -  "9092:9091"
+    environment:
+      - CLUSTER_BINDING_ADDRESS=node2:9090
+      - INITIAL_CLUSTER_NODES=node1:9090;node2:9090;node3:9090;node4:9090;node5:9090
+    depends_on:
+      - node1
+  node3:
+    image: test
+    ports:
+      -  "9093:9091"
+    environment:
+      - CLUSTER_BINDING_ADDRESS=node3:9090
+      - INITIAL_CLUSTER_NODES=node1:9090;node2:9090;node3:9090;node4:9090;node5:9090
+    depends_on:
+      - node1
+  node4:
+    image: test
+    ports:
+      -  "9094:9091"
+    environment:
+      - CLUSTER_BINDING_ADDRESS=node4:9090
+      - INITIAL_CLUSTER_NODES=node1:9090;node2:9090;node3:9090;node4:9090;node5:9090
+    depends_on:
+      - node1
+  node5:
+    image: test
+    ports:
+      -  "9095:9091"
+    environment:
+      - CLUSTER_BINDING_ADDRESS=node5:9090
+      - INITIAL_CLUSTER_NODES=node1:9090;node2:9090;node3:9090;node4:9090;node5:9090
+    depends_on:
+      - node1

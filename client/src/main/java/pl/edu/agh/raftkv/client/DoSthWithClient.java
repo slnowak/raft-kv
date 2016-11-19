@@ -13,8 +13,8 @@ public class DoSthWithClient {
                 "localhost:9091", "localhost:9092", "localhost:9093", "localhost:9094", "localhost:9095"
         );
 
-        for (int i = 0; i < 100_000; ++i) {
-            kvStore.put("key" + 1, "value");
+        for (int i = 0; i < 2; ++i) {
+            kvStore.put("key" + i, "value");
 
         }
     }
