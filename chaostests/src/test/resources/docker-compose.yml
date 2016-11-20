@@ -1,7 +1,7 @@
 version: '2'
 
 services:
-  node1:
+  survivor_node1:
     image: test
     ports:
       - "9091:9091"
@@ -11,7 +11,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.101
-  survivor_node2:
+  node2:
     image: test
     ports:
       - "9092:9091"
@@ -21,7 +21,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.102
-  node3:
+  survivor_node3:
     image: test
     ports:
       - "9093:9091"
@@ -41,7 +41,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.104
-  node5:
+  survivor_node5:
     image: test
     ports:
       - "9095:9091"
@@ -51,7 +51,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.105
-  survivor_node6:
+  node6:
     image: test
     ports:
       - "9096:9091"
@@ -61,7 +61,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.106
-  node7:
+  survivor_node7:
     image: test
     ports:
       - "9097:9091"
@@ -81,7 +81,7 @@ services:
     networks:
       copycat:
         ipv4_address: 192.168.16.108
-  node9:
+  survivor_node9:
     image: test
     ports:
       - "9099:9091"
