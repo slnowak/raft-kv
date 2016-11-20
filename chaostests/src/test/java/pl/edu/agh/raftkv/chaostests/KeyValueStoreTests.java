@@ -3,13 +3,6 @@ package pl.edu.agh.raftkv.chaostests;
 import com.jayway.awaitility.Awaitility;
 import lombok.SneakyThrows;
 import lombok.val;
-import org.arquillian.cube.q.api.ContainerChaos;
-import org.arquillian.cube.q.api.ContainerChaos.ContainersType;
-import org.arquillian.cube.q.api.NetworkChaos;
-import org.jboss.arquillian.junit.Arquillian;
-import org.jboss.arquillian.test.api.ArquillianResource;
-import org.junit.Test;
-import org.junit.runner.RunWith;
 import pl.edu.agh.raftkv.client.raftclient.KeyValueStoreClient;
 import pl.edu.agh.raftkv.client.raftclient.KeyValueStores;
 
@@ -20,50 +13,16 @@ import java.util.stream.IntStream;
 import static org.assertj.core.api.Assertions.assertThat;
 
 /**
- * Created by novy on 13.11.16.
+ * Created by novy on 20.11.16.
  */
-
-@RunWith(Arquillian.class)
-public class ChaosOnDockerContainersTest {
-
-    @ArquillianResource
-    ContainerChaos containerChaos;
-
-    @Test
-    public void should_write_n_keys_without_any_interruptions() throws Exception {
-        // given
-        waitForClusterToBeReady();
-        val numberOfKeys = 50_000;
-
-        // when
-        writeNKeys(numberOfKeys);
-
-        // expect
-        assertThatNKeysHaveBeenWritten(numberOfKeys);
-    }
-
-    @Test
-    public void should_survive_killing_containers() throws Exception {
-        // given
-        waitForClusterToBeReady();
-        val numberOfKeys = 50_000;
-
-        // when
-        containerChaos.onCubeDockerHost().stopRandomly(
-                ContainersType.regularExpression("^node"),
-                ContainerChaos.IntervalType.intervalInSeconds(10)
-        ).exec(() -> writeNKeys(numberOfKeys));
-
-        // expect
-        assertThatNKeysHaveBeenWritten(numberOfKeys);
-    }
+class KeyValueStoreTests {
 
     @SneakyThrows
-    private void waitForClusterToBeReady() {
+    static void waitForClusterToBeReady() {
         TimeUnit.SECONDS.sleep(15);
     }
 
-    private void writeNKeys(int n) {
+    static void writeNKeys(int n) {
         val executorService = Executors.newFixedThreadPool(50);
         val kvsClient = keyValueStoreClient();
 
@@ -79,7 +38,7 @@ public class ChaosOnDockerContainersTest {
         Awaitility.await().atMost(15, TimeUnit.MINUTES).until(executorService::isTerminated);
     }
 
-    private KeyValueStoreClient keyValueStoreClient() {
+    static KeyValueStoreClient keyValueStoreClient() {
         return KeyValueStores.connectedTo(
                 "localhost:9091",
                 "localhost:9092",
@@ -93,7 +52,7 @@ public class ChaosOnDockerContainersTest {
         );
     }
 
-    private void assertThatNKeysHaveBeenWritten(int n) {
+    static void assertThatNKeysHaveBeenWritten(int n) {
         val kvsClient = keyValueStoreClient();
 
         IntStream.range(0, n)
@@ -102,4 +61,5 @@ public class ChaosOnDockerContainersTest {
                     assertThat(kvsClient.get(key)).isPresent();
                 });
     }
+
 }
