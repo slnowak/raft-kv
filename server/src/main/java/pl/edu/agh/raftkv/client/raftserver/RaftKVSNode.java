@@ -4,6 +4,7 @@ import io.atomix.catalyst.transport.Address;
 import io.atomix.catalyst.transport.netty.NettyTransport;
 import io.atomix.copycat.server.CopycatServer;
 import io.atomix.copycat.server.storage.Storage;
+import lombok.SneakyThrows;
 import pl.edu.agh.raftkv.protocol.DeleteCommand;
 import pl.edu.agh.raftkv.protocol.GetQuery;
 import pl.edu.agh.raftkv.protocol.PutCommand;
@@ -42,6 +43,7 @@ public class RaftKVSNode {
         return server;
     }
 
+    @SneakyThrows
     private CopycatServer createCopycatNode() {
         return CopycatServer.builder(new Address(clientBinding.toURIString()), new Address(clusterBinding.toURIString()))
                 .withStateMachine(RaftKVStateMachine::new)

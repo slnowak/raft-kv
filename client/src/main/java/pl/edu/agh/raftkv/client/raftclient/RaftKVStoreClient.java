@@ -1,6 +1,7 @@
 package pl.edu.agh.raftkv.client.raftclient;
 
 import io.atomix.catalyst.transport.Address;
+import io.atomix.catalyst.transport.netty.NettyOptions;
 import io.atomix.catalyst.transport.netty.NettyTransport;
 import io.atomix.copycat.client.ConnectionStrategies;
 import io.atomix.copycat.client.CopycatClient;
@@ -14,6 +15,7 @@ import pl.edu.agh.raftkv.protocol.PutCommand;
 import java.util.Collection;
 import java.util.Collections;
 import java.util.Optional;
+import java.util.Properties;
 import java.util.stream.Collectors;
 
 /**
@@ -29,8 +31,9 @@ class RaftKVStoreClient implements KeyValueStoreClient {
     }
 
     public RaftKVStoreClient(Collection<String> clusterAddresses) {
+        final int numberOfThreads = 20;
         client = CopycatClient.builder(fromStringAddresses(clusterAddresses))
-                .withTransport(new NettyTransport())
+                .withTransport(NettyTransport.builder().withThreads(numberOfThreads).build())
                 .withConnectionStrategy(ConnectionStrategies.EXPONENTIAL_BACKOFF)
                 .withRecoveryStrategy(RecoveryStrategies.RECOVER)
                 .withServerSelectionStrategy(ServerSelectionStrategies.ANY)

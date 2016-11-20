@@ -54,10 +54,11 @@
             <scope>test</scope>
         </dependency>
 
+        <!--todo should work with alpha16-->
         <dependency>
             <groupId>org.arquillian.cube</groupId>
             <artifactId>arquillian-cube-docker</artifactId>
-            <version>1.0.0.Alpha15</version>
+            <version>1.0.0.Final-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
