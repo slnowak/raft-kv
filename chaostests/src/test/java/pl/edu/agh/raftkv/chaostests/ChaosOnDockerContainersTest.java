@@ -29,10 +29,6 @@ public class ChaosOnDockerContainersTest {
     @ArquillianResource
     ContainerChaos containerChaos;
 
-    @ArquillianResource
-    NetworkChaos networkChaos;
-
-
     @Test
     public void should_write_n_keys_without_any_interruptions() throws Exception {
         // given
@@ -53,10 +49,9 @@ public class ChaosOnDockerContainersTest {
         val numberOfKeys = 50_000;
 
         // when
-        containerChaos.onCubeDockerHost().killRandomly(
+        containerChaos.onCubeDockerHost().stopRandomly(
                 ContainersType.regularExpression("^node"),
-                ContainerChaos.IntervalType.intervalInSeconds(10),
-                ContainerChaos.KillSignal.SIGTERM
+                ContainerChaos.IntervalType.intervalInSeconds(10)
         ).exec(() -> writeNKeys(numberOfKeys));
 
         // expect

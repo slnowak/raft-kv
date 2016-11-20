@@ -72,7 +72,7 @@
         <dependency>
             <groupId>org.arquillian.cube.q</groupId>
             <artifactId>arquillian-cube-q-pumba</artifactId>
-            <version>1.0.0.Alpha2</version>
+            <version>1.0.0.Final-SNAPSHOT</version>
             <scope>test</scope>
         </dependency>
 
@@ -93,10 +93,6 @@
                     <groupId>io.netty</groupId>
                     <artifactId>netty-transport</artifactId>
                 </exclusion>
-                <!--<exclusion>-->
-                    <!--<groupId>io.netty</groupId>-->
-                    <!--<artifactId>netty-handler</artifactId>-->
-                <!--</exclusion>-->
             </exclusions>
         </dependency>
     </dependencies>
